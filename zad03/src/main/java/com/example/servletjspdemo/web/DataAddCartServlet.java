@@ -17,29 +17,29 @@ import javax.servlet.http.HttpServletResponse;
 import com.example.servletjspdemo.domain.Guitar;
 import com.example.servletjspdemo.service.StorageService;
 
-@WebServlet(urlPatterns = "/data")
-public class DataServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/data-cart")
+public class DataAddCartServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
-	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		out.println(request.getParameter("producer"));
-		StorageService storageService = new StorageService();
-		    
-		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-		Date makeDate = null;
-		try {
-			makeDate = formatter.parse(request.getParameter("makeDate"));
-		} catch (ParseException e) { }
-		    
-		Guitar newGuitar = new Guitar(Long.parseLong(request.getParameter("id")), request.getParameter("producer"), makeDate ,
-				Double.parseDouble(request.getParameter("price")), true);
-		    storageService.add(newGuitar);    
-	}
+		StorageService ss = (StorageService) getServletContext().getAttribute("storage_service");
+		
+		List<Guitar> availableGuitars = ss.getAllGuitars();
+		Guitar guitarToCart = availableGuitars.get(Integer.parseInt(request.getParameter("add")) - 1);
 
+		ss.addToCart(guitarToCart);
+		response.sendRedirect("cart");
+		out.close();
+	}
+	
+	@Override
+	public void init() throws ServletException {
+
+		// application context
+		getServletContext().setAttribute("storage_service", new StorageService());
+	}
 }
