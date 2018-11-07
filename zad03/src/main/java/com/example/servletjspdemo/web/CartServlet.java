@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.example.servletjspdemo.domain.Guitar;
 import com.example.servletjspdemo.service.StorageService;
@@ -31,12 +32,13 @@ public class CartServlet extends HttpServlet {
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		StorageService ss = (StorageService) getServletContext().getAttribute("storage_service");
+		HttpSession session = request.getSession(true);
 		
-		List<Guitar> allGuitars = ss.getAllCart();
+		List<Guitar> allGuitars = (List<Guitar>) session.getAttribute("cart");
 
 		out.append("<html><body><h2>Your cart:</h2>");
 
+		if (allGuitars != null) {
 		for (Guitar guitar: allGuitars) {
 			out.append("<p>Id: " + guitar.getId() + "</p>");
 			out.append("<p>Producer: " + guitar.getProducer() + "</p>");
@@ -44,16 +46,10 @@ public class CartServlet extends HttpServlet {
 			out.append("<p>Price: " + guitar.getPrice() + "</p>");
 			out.append("<p>Is Reserved: " + guitar.getIsReserved() + "</p></br>");
 		}
+		}
 
 		out.append("</br><li><a href='index'>Index</a></li>");
 		out.append("</body></html>");
 		out.close();
-	}
-	
-	@Override
-	public void init() throws ServletException {
-
-		// application context
-		getServletContext().setAttribute("storage_service", new StorageService());
 	}
 }

@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,10 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.example.servletjspdemo.domain.Guitar;
 import com.example.servletjspdemo.service.StorageService;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(urlPatterns = "/data-cart")
 public class DataAddCartServlet extends HttpServlet {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -30,8 +33,16 @@ public class DataAddCartServlet extends HttpServlet {
 		
 		List<Guitar> availableGuitars = ss.getAllGuitars();
 		Guitar guitarToCart = availableGuitars.get(Integer.parseInt(request.getParameter("add")) - 1);
+			
+		HttpSession ses = request.getSession();
+		if (ses.getAttribute("cart") == null) {
+			List<Guitar> cart = new ArrayList<Guitar>();
+			ses.setAttribute("cart", cart);
+		}
+		
+		List<Guitar> cart = (List<Guitar>) ses.getAttribute("cart");
+		cart.add(guitarToCart);
 
-		ss.addToCart(guitarToCart);
 		response.sendRedirect("cart");
 		out.close();
 	}
