@@ -20,14 +20,14 @@ public class IndexServlet extends HttpServlet {
             throws ServletException, IOException {
 
         response.setContentType("text/html");
-        
         HttpSession session = request.getSession(true);
-        if (session.getAttribute("rodo") == null)
-        	response.sendRedirect("Start.jsp");
         
         if (request.getParameterMap().containsKey("rodo") && request.getParameterMap().containsKey("rodo2")) {
         	session.setAttribute("rodo", true);
         }
+        
+        if (session.getAttribute("rodo") == null)
+        	response.sendRedirect("Start.jsp");
 
         PrintWriter out = response.getWriter();
         out.println("<html><body><h1>Welcome</h1> <br>" +
