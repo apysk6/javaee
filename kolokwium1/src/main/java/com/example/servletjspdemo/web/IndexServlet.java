@@ -36,7 +36,7 @@ public class IndexServlet extends HttpServlet {
                 "<li><a href='add-guitar'>Add Guitar</a></li>" +
                 "<li><a href='all-guitars'>Buy guitar</a></li>" +
                 "<li><a href='cart'>Your cart</a></li>" +
-                "<li><a href='survey.jsp'>Survey</a></li>" +
+                "<li><a href='Survey.jsp'>Survey</a></li>" +
                 "<li><a href='allSurveys'>All users surveys</a></li>" +
                 "</ul>" +
                 "</body></html>");
