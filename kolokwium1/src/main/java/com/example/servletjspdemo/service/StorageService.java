@@ -20,8 +20,16 @@ public class StorageService {
 		return db;
 	}
 	
+	public List<Survey> getAllSurveys() {
+		return dbSurvey;
+	}
+	
 	public void addSurvey(Survey survey) {
 		Survey newSurvey = new Survey(survey.getDateFrom(), survey.getDateTo(), survey.getFrequency(), survey.getComment());
 		dbSurvey.add(newSurvey);
+	}
+	
+	public void removeSurvey(Survey survey) {
+		dbSurvey.remove(survey);
 	}
 }

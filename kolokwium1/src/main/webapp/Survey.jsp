@@ -10,22 +10,22 @@
 <body>
 
 <h1>Fill in the questionnaire:</h1>
-<form action="addSurvey">
+<form action="data-survey">
     <label for="from">Using product from:</label>
-    <input type="text" name="from" id="from" required="required" value="${sess_news.dateFrom}"><br>
+    <input type="text" name="dateFrom" id="dateFrom" required="required" value="${session_survey.dateFrom}"><br>
 
     <label for="to">Using product to:</label>
-    <input type="text" name="to" id="to" required="required" value="${sess_news.dateTo}"><br>
+    <input type="text" name="dateTo" id="dateTo" required="required" value="${session_survey.dateTo}"><br>
 
     <br><label>Frequency:</label><br>
-    <input type="radio" name="frequency" value="daily">Daily<br>
-    <input type="radio" name="frequency" value="weekly">Weekly<br>
-    <input type="radio" name="frequency" value="monthly">Monthly<br>
+    <input type="radio" name="frequency" required="required" value="daily">Daily<br>
+    <input type="radio" name="frequency" required="required" value="weekly">Weekly<br>
+    <input type="radio" name="frequency" required="required" value="monthly">Monthly<br>
 
     <br><label>Comments:</label><br>
-    <input type="checkbox" name="subjects" value="quality">I am satisfied with quality.<br>
-    <input type="checkbox" name="subjects" value="expensive">Too expensive.<br>
-    <input type="checkbox" name="subjects" value="products">Not enough products.<br><br>
+    <input type="checkbox" name="comment" value="quality">I am satisfied with quality.<br>
+    <input type="checkbox" name="comment" value="expensive">Too expensive.<br>
+    <input type="checkbox" name="comment" value="products">Not enough products.<br><br>
 
     <input type="submit" value="Done">
 </form>
