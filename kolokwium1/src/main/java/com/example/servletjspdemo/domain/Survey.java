@@ -42,12 +42,12 @@ public class Survey {
 		this.frequency = frequency;
 	}
 
-	public String getComments() {
-		return comments;
+	public String getComment() {
+		return comment;
 	}
 
-	public void setComments(String comments) {
-		this.comments = comments;
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
     
 

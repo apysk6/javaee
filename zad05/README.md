@@ -1,1 +1,1 @@
-Maven - Servlet + JSP -> dodano RODO do sklepu.
+Kolokwium 1.
