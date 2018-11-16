@@ -23,9 +23,9 @@
     <input type="radio" name="frequency" required="required" value="monthly">Monthly<br>
 
     <br><label>Comments:</label><br>
-    <input type="checkbox" name="comment" value="quality">I am satisfied with quality.<br>
-    <input type="checkbox" name="comment" value="expensive">Too expensive.<br>
-    <input type="checkbox" name="comment" value="products">Not enough products.<br><br>
+    <input type="checkbox" name="comment" value="I am satisfied with quality.">I am satisfied with quality.<br>
+    <input type="checkbox" name="comment" value="Too expensive.">Too expensive.<br>
+    <input type="checkbox" name="comment" value="Not enough products.">Not enough products.<br><br>
 
     <input type="submit" value="Done">
 </form>
