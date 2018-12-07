@@ -113,6 +113,41 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "UpdateGuitar",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/restwsejbdemo/api/guitar/0?producer=updateProducer&price=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"restwsejbdemo",
+						"api",
+						"guitar",
+						"0"
+					],
+					"query": [
+						{
+							"key": "producer",
+							"value": "updateProducer"
+						},
+						{
+							"key": "price",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
