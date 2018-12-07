@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "17447faf-7157-4dca-bcad-5e5a4fb141d6",
+		"name": "GuitarCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AddGuitar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/restwsejbdemo/api/guitar/?producer=Gibson&price=999",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"restwsejbdemo",
+						"api",
+						"guitar",
+						""
+					],
+					"query": [
+						{
+							"key": "producer",
+							"value": "Gibson"
+						},
+						{
+							"key": "price",
+							"value": "999"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllGuitars",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/restwsejbdemo/api/guitar/allGuitars",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"restwsejbdemo",
+						"api",
+						"guitar",
+						"allGuitars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteAllGuitars",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/restwsejbdemo/api/guitar",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"restwsejbdemo",
+						"api",
+						"guitar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetGuitar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/restwsejbdemo/api/guitar/0",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"restwsejbdemo",
+						"api",
+						"guitar",
+						"0"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

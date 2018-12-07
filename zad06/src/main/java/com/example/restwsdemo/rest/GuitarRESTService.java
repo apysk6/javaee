@@ -11,6 +11,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -41,7 +42,7 @@ public class GuitarRESTService {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addGuitar(@PathParam("producer") String producer, @PathParam("price") double price) {
+	public Response addGuitar(@QueryParam("producer") String producer, @QueryParam("price") double price) {
 		Guitar guitar = new Guitar(producer, price);
 		gm.addGuitar(guitar);
 
@@ -53,5 +54,4 @@ public class GuitarRESTService {
 		gm.deleteAllGuitars();
 		return Response.status(200).build();
 	}
-
 }
