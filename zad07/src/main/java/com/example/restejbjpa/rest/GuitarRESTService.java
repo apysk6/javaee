@@ -18,19 +18,34 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.example.restejbjpa.domain.Guitar;
+import com.example.restejbjpa.domain.Owner;
+import com.example.restejbjpa.domain.Serial;
 import com.example.restejbjpa.service.GuitarManager;
+import com.example.restejbjpa.service.SerialManager;
 
 @Path("guitar")
 public class GuitarRESTService {
 
 	@Inject
 	private GuitarManager gm;
+	
+	@Inject
+	private SerialManager sm;
 
 	@GET
 	@Path("/{guitarId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Guitar getGuitar(@PathParam("guitarId") Integer id) {
 		Guitar p = gm.getGuitar(id);
+		return p;
+	}
+	
+	@GET
+	@Path("/bySerialNumber")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Guitar getGuitarBySerialNumber(@QueryParam("serialNumber") Long serialNumber) {
+		Guitar p = gm.getGuitarBySerialNumber(serialNumber);
+		
 		return p;
 	}
 
@@ -44,7 +59,7 @@ public class GuitarRESTService {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addGuitar(@QueryParam("producer") String producer, @QueryParam("price") double price) {
-		Guitar guitar = new Guitar(producer, price);
+		Guitar guitar = new Guitar(price);
 		gm.addGuitar(guitar);
 
 		return Response.status(201).entity("Guitar").build();
@@ -53,7 +68,7 @@ public class GuitarRESTService {
 	@PUT
 	@Path("/{guitarId}")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response updateCustomer(@PathParam("guitarId") Integer id, 
+	public Response updateGuitar(@PathParam("guitarId") Integer id, 
 	                               @QueryParam("producer") String producer, @QueryParam("price") double price) {
 
 		Guitar guitar = gm.getGuitar(id);
@@ -61,11 +76,32 @@ public class GuitarRESTService {
 	        throw new WebApplicationException("Can't find it", 404);
 	    }
 
-	    guitar.setProducer(producer);
 	    guitar.setPrice(price);
 
 	    return Response.status(200).entity("Guitar").build();
 	}
+	
+    @GET
+    @Path("/getOwners/{guitarId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Owner> getOwnersOfGuitar(@PathParam("guitarId") Integer id){
+        return gm.getOwnersOfGuitar(id);
+    }
+    
+    @POST
+    @Path("/setSerial/{guitarId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response setGuitarSerial(@PathParam("guitarId") Integer id, @QueryParam("serialNumber") Long serialNumber){
+        Serial serial = new Serial(serialNumber);
+        sm.addSerial(serial);
+        
+        Guitar guitar = gm.getGuitar(id);
+        
+        guitar.setSerial(serial);
+        gm.updateGuitar(guitar);
+        
+        return Response.status(200).build();
+    }
 
 	@DELETE
 	public Response clearGuitars() {

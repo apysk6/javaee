@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.example.restejbjpa.domain.Guitar;
+import com.example.restejbjpa.domain.Owner;
 
 
 @Stateless
@@ -22,7 +23,7 @@ public class GuitarManager {
         em.persist(guitar);
     }
 
-    public Guitar getGuitar(int id){
+    public Guitar getGuitar(long id){
         return em.find(Guitar.class, id);
     }
 
@@ -32,6 +33,17 @@ public class GuitarManager {
 
     public void deleteAllGuitars(){
         em.createNamedQuery("Guitar.deleteAll").executeUpdate();
+    }
+    
+    public Guitar getGuitarBySerialNumber(long serialNumber){
+        return (Guitar) em.createNamedQuery("guitar.bySerialNumber").setParameter("serialNumber", serialNumber).getSingleResult();
+    }
+    
+    public List<Owner> getOwnersOfGuitar(long id) {
+    	Guitar received = em.find(Guitar.class, id);
+    	List<Owner> owners = new ArrayList<>(received.getOwners());
+    	
+    	return owners;	
     }
 
     @SuppressWarnings("unchecked")

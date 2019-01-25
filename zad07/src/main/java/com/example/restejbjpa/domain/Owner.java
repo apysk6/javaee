@@ -3,6 +3,8 @@ package com.example.restejbjpa.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -10,11 +12,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "owner.getAll", query = "Select p from Owner p"),
-        @NamedQuery(name = "owner.deleteAll", query="Delete from Owner ")
+        @NamedQuery(name = "owner.deleteAll", query="Delete from Owner "),
+        @NamedQuery(name = "owner.getGuitarsOfOwner", query="Select g.price, p.name, p.surname from Guitar g JOIN g.owners p where p.surname = :surname")
 })
 public class Owner {
 
-    private int id;
+    private long id;
     private String name;
     private String surname;
     private int age;
@@ -32,11 +35,11 @@ public class Owner {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -65,10 +68,12 @@ public class Owner {
     }
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
     public List<Guitar> getGuitars() {
         return guitars;
     }
 
+    @JsonIgnore
     public void setGuitars(List<Guitar> guitars) {
         this.guitars = guitars;
     }

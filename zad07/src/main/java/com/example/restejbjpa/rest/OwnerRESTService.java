@@ -29,26 +29,19 @@ public class OwnerRESTService {
     @EJB
     OwnerManager om;
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response addProducer(Owner owner) {
-    	Guitar guitar1 = new Guitar("Gibson", 144);
-    	Guitar guitar2 = new Guitar("Epiphone", 300);
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addGuitar(@QueryParam("name") String name, @QueryParam("surname") String surname, @QueryParam("age") int age) {
+		Owner owner = new Owner(name, surname, age);
+		om.addOwner(owner);
 
-        List<Guitar> guitars = new ArrayList<>();
-        guitars.add(guitar1);
-        guitars.add(guitar2);
-
-        owner.setGuitars(guitars);
-        om.addOwner(owner);
-
-        return Response.status(Response.Status.CREATED).build();
-    }
+		return Response.status(201).entity("Owner").build();
+	}
 
     @PUT
     @Path("/{ownerId}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateGuitar(@PathParam("ownerId") int id, Owner newOwner) {
+    public Response updateOwner(@PathParam("ownerId") Integer id, Owner newOwner) {
         Owner owner = om.getOwner(id);
 
         owner.setName(newOwner.getName());
@@ -70,8 +63,15 @@ public class OwnerRESTService {
     @GET
     @Path("/{ownerId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Owner getOwner(@PathParam("ownerId") int id){
+    public Owner getOwner(@PathParam("ownerId") Integer id){
         return om.getOwner(id);
+    }
+    
+    @GET
+    @Path("/getBySurname/{surname}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Owner getOwnerBySurname(@PathParam("surname") String surname) {
+    	return om.getOwnerBySurname(surname);
     }
 
     @GET
@@ -81,7 +81,35 @@ public class OwnerRESTService {
     public List<Owner> getAllOwners(){
         return om.getAllOwners();
     }
+    
+	@GET
+	@Path("/manytomany")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response manyOwnersToManyGuitars() {
+		
+		Owner owner = new Owner("Theodore", "Jenkins", 22);
+		
+		Guitar g1 = new Guitar(450);
+		Guitar g2 = new Guitar(650);
+		
+		List<Guitar> guitars = new ArrayList<Guitar>();
+		guitars.add(g1);
+		guitars.add(g2);
+		
+		owner.addGuitars(guitars);
+		
+		om.addOwner(owner);
+		
+		return Response.status(200).build();
+	}
 
+    @GET
+    @Path("/getGuitars/{ownerId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Guitar> getGuitarsOfOwner(@PathParam("ownerId") Integer id){
+        return om.getGuitarsOfOwner(id);
+    }
+	
 	@DELETE
 	public Response clearOwners() {
 		om.deleteAllOwners();
